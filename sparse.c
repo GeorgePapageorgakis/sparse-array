@@ -22,7 +22,7 @@ struct node{
     Inserts node in the horizontal indexing.	
 */
 void insert_horizontal(struct node *aux, struct node *temp){
-    if (temp->j > aux->j){
+    	if (temp->j > aux->j){
 		/* if next of aux is not null but there are other elements still to compare with temp
 		the function takes the next structure that is being pointed by aux and the node that
 		is already in temp.
@@ -32,17 +32,17 @@ void insert_horizontal(struct node *aux, struct node *temp){
 			insert_horizontal(aux->next, temp);
 		else{
 			temp->previous	= aux;
-			aux->next		= temp;
+			aux->next	= temp;
 		}
 	}
 	/* else the temp is placed left of aux, the next of the previous struct 
 	of aux must point to temp and aux->previous must show the new struct
 	*/
-    else if (temp->j < aux->j){
-		temp->previous		= aux->previous;
-		temp->next			= aux;
+    	else if (temp->j < aux->j){
+		temp->previous	    = aux->previous;
+		temp->next	    = aux;
 		aux->previous->next = temp;			
-		aux->previous		= temp;
+		aux->previous	    = temp;
 	}
 }
 
@@ -51,8 +51,8 @@ void insert_horizontal(struct node *aux, struct node *temp){
     Inserts node in the vertical indexing.	
 */
 void insert_vertical(int *p_check, struct node *aux, struct node *temp){
-   *p_check = 0;
-    if (temp->i > aux->i){
+   	*p_check = 0;
+    	if (temp->i > aux->i){
 		/* if down of aux is not null but there are other elements still to compare with temp
 		the function takes the structure beneath that is being pointed by aux and the node that
 		is already in temp.
@@ -62,23 +62,23 @@ void insert_vertical(int *p_check, struct node *aux, struct node *temp){
 		if (aux->down != NULL)
 			insert_vertical(p_check, aux->down, temp);
 		else{
-			temp->up  	= aux;
-			aux->down 	= temp;
+			temp->up  = aux;
+			aux->down = temp;
 		}
 	}
 	/* else if temp is placed above the aux, the temp->up must point to where aux
 	was pointing to, temp->down must point to aux, the down of the upper structure 
 	of aux must point to temp and the aux->up must point to the new struct.
 	*/
-    else if (temp->i < aux->i){
+    	else if (temp->i < aux->i){
 		temp->up		= aux->up;
 		temp->down		= aux;
 		aux->up->down	= temp;
 		aux->up			= temp;
 	}
 	//avoid insertion of same element, also works as diagonal index checking
-    else
-        *p_check = 1;
+    	else
+        	*p_check = 1;
 }
 
 /**
@@ -86,17 +86,17 @@ void insert_vertical(int *p_check, struct node *aux, struct node *temp){
 */
 void delete_node(struct node *aux){
 	if (aux->next != NULL){
-        aux->previous->next	= aux->next;
-        aux->next->previous	= aux->previous;
-    }
+	        aux->previous->next	= aux->next;
+	        aux->next->previous	= aux->previous;
+	}
 	else{
 		aux->previous->next =NULL;
 	}
-    if (aux->down != NULL){
-        aux->up->down = aux->down;
-        aux->down->up = aux->up;
-    }
-    else{
+	if (aux->down != NULL){
+	        aux->up->down = aux->down;
+	        aux->down->up = aux->up;
+	}
+	else{
 		aux->up->down = NULL;
 	}
 	free(aux);
@@ -106,7 +106,7 @@ void delete_node(struct node *aux){
     search for the node and delete it if it exists
 */
 void search_delete(struct node *aux, int y){
-    if (aux->j != y){
+    	if (aux->j != y){
 	  	//if not in the last element
 		if ((aux->j < y) && (aux->next!=NULL))
 			search_delete(aux->next, y);
@@ -115,7 +115,7 @@ void search_delete(struct node *aux, int y){
 		}
 	}
 	//else the element exists and is to be deleted
-    else{ 
+    	else{ 
 		delete_node(aux);
 		printf("Edge deleted.\n"); fflush(stdout);
 	}
@@ -136,20 +136,20 @@ void display(struct node *aux){
 */
 void initialize(void){
 	int k;
-    for (k=1; k < MAX_LENGTH; ++k){
-        V[k].i			= k;
-        V[k].j			= 0;
-        V[k].next		= NULL;
-        V[k].previous	= NULL;
-        V[k].up			= NULL;
-        V[k].down		= NULL;
-        H[k].i			= 0;
-        H[k].j			= k;
-        H[k].next		= NULL;
-        H[k].previous	= NULL;
-        H[k].up			= NULL;
-        H[k].down		= NULL;
-    }
+    	for (k=1; k < MAX_LENGTH; ++k){
+	        V[k].i		= k;
+	        V[k].j		= 0;
+	        V[k].next	= NULL;
+	        V[k].previous	= NULL;
+	        V[k].up		= NULL;
+	        V[k].down	= NULL;
+	        H[k].i		= 0;
+	        H[k].j		= k;
+	        H[k].next	= NULL;
+	        H[k].previous	= NULL;
+	        H[k].up		= NULL;
+	        H[k].down	= NULL;
+    	}
 }
 
 
@@ -172,40 +172,40 @@ int main (void){
 				scanf(" %d", &temp->i); fflush(stdin);
 				printf("node j:\n");
 				scanf(" %d", &temp->j); fflush(stdin);
-                if (temp->i > 0 && temp->j > 0 && temp->i < 31 && temp-> j< 31){
+                		if (temp->i > 0 && temp->j > 0 && temp->i < 31 && temp-> j< 31){
 					insert_horizontal(&V[temp->i], temp);   //ksekinaei apo tin grammi i
 					insert_vertical(p_check, &H[temp->j], temp);
 					x = temp->i;
 					y = temp->j;
 				}
-                else{
+                		else{
 					printf("Edge cordinates out of range\n");
 				}
-            }
-            else{ 
+            		}
+            		else{ 
 				printf("Memory is Full");
 			}
 			
-            if ((temp = (struct node *) malloc(sizeof(struct node))) != NULL){
+            		if ((temp = (struct node *) malloc(sizeof(struct node))) != NULL){
 				temp->previous	= NULL;
-				temp->next		= NULL;
-				temp->up		= NULL;
-				temp->down		= NULL;
-				temp->i			= 0;
-				temp->j			= 0;
+				temp->next	= NULL;
+				temp->up	= NULL;
+				temp->down	= NULL;
+				temp->i		= 0;
+				temp->j		= 0;
 				//forbids insertion of diagonal nodes
 				if (check == 0){
-                    temp->i=y;
-                    temp->j=x;
-                    insert_horizontal(&V[temp->i],temp);
-                    insert_vertical(p_check, &H[temp->j],temp);
-                }
-                else
+		                    temp->i=y;
+		                    temp->j=x;
+		                    insert_horizontal(&V[temp->i],temp);
+		                    insert_vertical(p_check, &H[temp->j],temp);
+		                }
+		                else
 					printf("Edge already regeistered\n");
-            }
-            else 
+			}
+			else 
 				printf("Memory is Full");
-        }
+        	}
 		else if (ch=='p'|| ch=='P'){
 			printf("______________________________________________________________________________\n");
 			for (k=1; k < MAX_LENGTH; ++k){
@@ -222,7 +222,7 @@ int main (void){
 			search_delete(&V[x],y);
 			search_delete(&V[y],x);
 		}
-    }
-    fflush(stdout);
-    return 0;
+	}
+	fflush(stdout);
+	return 0;
 }
